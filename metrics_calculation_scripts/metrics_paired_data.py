@@ -11,12 +11,12 @@ def run_silhouette_metrics(adata, batch_key='orig.ident', cell_label='paper.cell
     # global silhouette coefficient
     sil_global = me.silhouette(adata, group_key='paper.cell.type', embed=embed, metric='euclidean')
     # silhouette coefficient per batch
-    _, sil_clus = me.silhouette_batch(adata, batch_key='orig.ident', group_key='paper.cell.type',
+    _, sil_clus = me.silhouette_batch(adata, batch_key=batch_key, group_key=cell_label,
                                        embed=embed, metric='euclidean', verbose=False)
     sil_clus = sil_clus['silhouette_score'].mean()
-    il_score_sil = me.isolated_labels(adata, label_key='paper.cell.type', batch_key='orig.ident',
+    il_score_sil = me.isolated_labels(adata, label_key=cell_label, batch_key=batch_key,
                                        cluster=False, n=1, verbose=False)
-    il_score_clus = me.isolated_labels(adata, label_key='paper.cell.type', batch_key='orig.ident',
+    il_score_clus = me.isolated_labels(adata, label_key=cell_label, batch_key=batch_key,
                                 cluster=True, n=1, verbose=False)
     
     return(sil_global, sil_clus, il_score_clus, il_score_sil)
